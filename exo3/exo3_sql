@@ -1,0 +1,42 @@
+CREATE TABLE proprietaire (
+    id_proprietaire INT PRIMARY KEY AUTO_INCREMENT,
+    nom VARCHAR(255) NOT NULL,
+    prenom VARCHAR(255) NOT NULL,
+    adresse TEXT NOT NULL,
+    telephone VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE bien (
+    id_bien INT PRIMARY KEY AUTO_INCREMENT,
+    taille INT NOT NULL,
+    adresse TEXT NOT NULL,
+    prix_location DECIMAL(10,2) NOT NULL,
+    id_proprietaire INT NOT NULL,
+    FOREIGN KEY (id_proprietaire) REFERENCES proprietaire(id_proprietaire)
+);
+
+CREATE TABLE contrat_gestion (
+    id_contrat INT PRIMARY KEY AUTO_INCREMENT,
+    duree INT NOT NULL,
+    pourcentage DECIMAL(5,2) NOT NULL,
+    id_bien INT NOT NULL UNIQUE,
+    FOREIGN KEY (id_bien) REFERENCES bien(id_bien)
+);
+
+CREATE TABLE locataire (
+    id_locataire INT PRIMARY KEY AUTO_INCREMENT,
+    nom VARCHAR(255) NOT NULL,
+    prenom VARCHAR(255) NOT NULL,
+    adresse TEXT NOT NULL,
+    telephone VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE bail (
+    id_bail INT PRIMARY KEY AUTO_INCREMENT,
+    id_bien INT NOT NULL,
+    id_locataire INT NOT NULL,
+    date_debut DATE NOT NULL,
+    date_fin DATE NOT NULL,
+    FOREIGN KEY (id_bien) REFERENCES bien(id_bien),
+    FOREIGN KEY (id_locataire) REFERENCES locataire(id_locataire)
+);
